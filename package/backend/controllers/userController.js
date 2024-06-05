@@ -117,10 +117,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route GET /api/users
 // @access Private/Teacher
 const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.find({});
+    const users = await User.find({ role: 'teacher'});
     res.status(200).json(users);
 });
 
+const getStudents = asyncHandler(async (req, res) => {
+    const students = await User.find({ role: 'student' });
+    res.status(200).json(students); // Make sure to send a proper status code
+});
 // @desc Create a new user
 // @route POST /api/users
 // @access Private/Teacher
@@ -192,4 +196,5 @@ export {
     createUser,
     updateUser,
     deleteUser,
+    getStudents,
 };

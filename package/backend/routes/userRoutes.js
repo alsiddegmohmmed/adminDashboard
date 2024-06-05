@@ -1,5 +1,4 @@
 import express from "express"; 
-import { getStudents } from "../controllers/studentController.js";
 import { getTeachers } from "../controllers/teacherController.js";
 
 import { 
@@ -11,7 +10,8 @@ import {
   getUsers,
   updateUser,
   deleteUser,
-  createUser
+  createUser,
+  getStudents,
 } from "../controllers/userController.js";
 
 import { protect, teacher } from "../middleware/authMiddleware.js";
@@ -28,21 +28,24 @@ router.route('/home/profile')
   .put(protect, updateUserProfile);
 
 router.route('/teacher-dashboard')
-  .get(protect, teacher, (req, res) => res.send('Teacher Dashboard'));
+  .get((req, res) => res.send('Teacher Dashboard'));
 
 router.route('/')
-    .get(protect, teacher, getUsers)  // Changed from admin to teacher
-    .post(protect, teacher, createUser); // Changed from admin to teacher
+    .get( getUsers)  // Changed from admin to teacher
+    .post( createUser); // Changed from admin to teacher
+
+    router.route('/students')
+    .get( getStudents);     
 
 // router.route('/:id').put(protect, teacher, updateUser) ;
-router.route('/:id').delete(protect, deleteUser).put(protect, updateUser);
+router.route('/:id').delete( deleteUser).put( updateUser);
 
-router.route('/students')
-    .get(protect, teacher, getStudents);
+// router.route('/students')
+//     .get(protect, teacher, getStudents);
 
 // Fetch teachers
 router.route('/teachers')
-    .get(protect, teacher, getTeachers);
+    .get( getTeachers);
 
 
 

@@ -6,6 +6,8 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
     USER_DELETE_FAIL,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT,
 } from '../../constants/UserConstants';
 
 export const userListReducer = (state = { users: [] }, action) => {
@@ -34,17 +36,27 @@ export const userDeleteReducer = (state = {}, action) => {
     }
 };
 
-export const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case USER_LOGIN_REQUEST:
-            return { ...state, loading: true };
-        case USER_LOGIN_SUCCESS:
-            return { ...state, loading: false, userInfo: action.payload };
-        case USER_LOGIN_FAIL:
-            return { ...state, loading: false, error: action.payload };
-        case USER_LOGOUT:
-            return { ...state, userInfo: null };
-        default:
-            return state;
-    }
+// src/reducers/userReducers.js
+
+
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
+
+const initialState = {
+  userInfo: userInfoFromStorage,
 };
+
+export const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case USER_LOGIN_SUCCESS:
+      return { ...state, userInfo: action.payload };
+    case USER_LOGOUT:
+      return { ...state, userInfo: null };
+    default:
+      return state;
+  }
+};
+
+
+

@@ -1,5 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../slices/usersApiSlice.js";
+import { useDispatch, useSelector } from 'react-redux';
+import logout from "../slices/authSlice.js";
+
 import {
   Navbar,
   Collapse,
@@ -19,6 +23,11 @@ import user1 from "../assets/images/users/user1.jpg";
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const {userInfo} = useSelector((state) => state.auth );
+  const  [logoutApiCall] = useLogoutMutation(); 
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
+
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -27,6 +36,18 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate('/welcome');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Navbar color="primary" dark expand="md">
       <div className="d-flex align-items-center">
@@ -96,7 +117,7 @@ const Header = () => {
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
             <DropdownItem>Inbox</DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem onClick={logoutHandler}>Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>

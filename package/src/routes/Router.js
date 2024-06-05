@@ -1,6 +1,7 @@
+// src/routes/ThemeRoutes.js
+
 import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import PrivateRoute from '../components/PrivateRoute.jsx';
 import WelcomePage from '../components/WelcomePage.jsx';
 import Students from '../views/ui/Students.js';
 
@@ -31,25 +32,19 @@ const ThemeRoutes = [
   },
   {
     path: "/",
-    element: <PrivateRoute />, // Protect all routes under FullLayout
+    element: <FullLayout />,
     children: [
-      {
-        path: "/",
-        element: <FullLayout />,
-        children: [
-          { path: "starter", element: <Starter /> },
-          { path: "about", element: <About /> },
-          { path: "students", element: <Students /> },
-          { path: "alerts", element: <Alerts /> },
-          { path: "badges", element: <Badges /> },
-          { path: "buttons", element: <Buttons /> },
-          { path: "cards", element: <Cards /> },
-          { path: "grid", element: <Grid /> },
-          { path: "table", element: <Tables /> },
-          { path: "forms", element: <Forms /> },
-          { path: "breadcrumbs", element: <Breadcrumbs /> },
-        ],
-      }
+      { path: "starter", element: <Starter /> },
+      { path: "about", element: <About /> },
+      { path: "students", element: <Students /> },
+      { path: "alerts", element: <Alerts /> },
+      { path: "badges", element: <Badges /> },
+      { path: "buttons", element: <Buttons /> },
+      { path: "cards", element: <Cards /> },
+      { path: "grid", element: <Grid /> },
+      { path: "tables", element: <Tables /> },
+      { path: "forms", element: <Forms /> },
+      { path: "breadcrumbs", element: <Breadcrumbs /> },
     ],
   },
 ];

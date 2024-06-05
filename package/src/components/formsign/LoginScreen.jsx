@@ -23,7 +23,7 @@ const LoginScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/starter', { replace: true });
+            navigate('/starter');
         }
     }, [navigate, userInfo]);
 

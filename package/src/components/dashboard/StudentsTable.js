@@ -3,18 +3,18 @@ import { Card, CardBody, CardTitle, CardSubtitle, Table, Button } from 'reactstr
 import axios from 'axios';
 
 const StudentsTables = () => {
-  const [users, setUsers] = useState([]);
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    getAllUsers();
+    getAllStudents();
   }, []);
 
-  const getAllUsers = () => {
-    axios.get('http://localhost:5000/api/getusers') // Adjusted according to proxy setup
+  const getAllStudents = () => {
+    axios.get('http://localhost:5000/api/users/students')
       .then(response => {
-        setUsers(response.data);
+        setStudents(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -23,6 +23,7 @@ const StudentsTables = () => {
       });
   };
 
+
   const deleteUser = (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}`)) {
       axios.delete(`http://localhost:5000/api/users/${id}`, {
@@ -30,7 +31,7 @@ const StudentsTables = () => {
       })
       .then(response => {
         alert(response.data.message);
-        getAllUsers();
+        getAllStudents();
       })
       .catch(error => {
         console.error('There was an error deleting the user!', error);
@@ -43,23 +44,23 @@ const StudentsTables = () => {
     <div>
       <Card>
         <CardBody>
-          <CardTitle tag="h5">Project Listing</CardTitle>
+          <CardTitle tag="h5">Students List</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">
-            Overview of the projects
+            Overview of the students 
           </CardSubtitle>
           <Table className="no-wrap mt-3 align-middle" responsive borderless>
             <thead>
               <tr>
-                <th>Team Lead</th>
-                <th>Project</th>
-                <th>Status</th>
-                <th>Weeks</th>
-                <th>Budget</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created Time</th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
-                <tr key={user._id} className="border-top">
+              {students.map(student => (
+                <tr key={student._id} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
@@ -70,18 +71,18 @@ const StudentsTables = () => {
                         height="45"
                       />
                       <div className="ms-3">
-                        <h6 className="mb-0">{user.name}</h6>
-                        <span className="text-muted">{user.email}</span>
+                        <h6 className="mb-0">{student.name}</h6>
+                        <span className="text-muted"></span>
                       </div>
                     </div>
                   </td>
-                  <td><p>placeholder</p></td>
-                  <td><p>placeholder</p></td>
-                  <td><p>placeholder</p></td>
+                  <td><p>{student.email}</p></td>
+                  <td><p>{student.role}</p></td>
+                  <td><p>{student.createdAt}</p></td>
                   <td>
                     <Button
                       variant="danger"
-                      onClick={() => deleteUser(user._id, user.name)}
+                      onClick={() => deleteUser(student._id, student.name)}
                     >
                       Delete
                     </Button>

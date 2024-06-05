@@ -43,18 +43,18 @@ const ProjectTables = () => {
     <div>
       <Card>
         <CardBody>
-          <CardTitle tag="h5">Project Listing</CardTitle>
+          <CardTitle tag="h5">Teachers List</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">
-            Overview of the projects
+            Overview of the Teachers
           </CardSubtitle>
           <Table className="no-wrap mt-3 align-middle" responsive borderless>
             <thead>
               <tr>
-                <th>Team Lead</th>
-                <th>Project</th>
-                <th>Status</th>
-                <th>Weeks</th>
-                <th>Budget</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created At</th>
+                <th>Option</th>
               </tr>
             </thead>
             <tbody>
@@ -71,13 +71,13 @@ const ProjectTables = () => {
                       />
                       <div className="ms-3">
                         <h6 className="mb-0">{user.name}</h6>
-                        <span className="text-muted">{user.email}</span>
+                        <span className="text-muted"></span>
                       </div>
                     </div>
                   </td>
-                  <td><p>placeholder</p></td>
-                  <td><p>placeholder</p></td>
-                  <td><p>placeholder</p></td>
+                  <td><p>{user.email}</p></td>
+                  <td><p>{user.role}</p></td>
+                  <td><p>{user.createdAt}</p></td>
                   <td>
                     <Button
                       variant="danger"

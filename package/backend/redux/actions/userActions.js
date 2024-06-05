@@ -7,6 +7,8 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
     USER_DELETE_FAIL,
+    USER_LOGIN_SUCCESS, 
+    USER_LOGOUT,
 } from '../../constants/UserConstants.js';
 
 export const listUsers = () => async (dispatch, getState) => {
@@ -60,3 +62,18 @@ export const deleteUser = (id) => async (dispatch, getState) => {
         });
     }
 };
+
+
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.post('/api/users/logout');
+    dispatch({ type: USER_LOGOUT });
+    localStorage.removeItem('userInfo');
+  } catch (error) {
+    console.error('Error logging out', error);
+  }
+};
+
+// Logout action
+
+

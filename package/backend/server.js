@@ -45,7 +45,7 @@ app.get('/api/getUsers', (req, res) => {
 });
 
 app.use('/api/users', userRoutes);
-// app.use('/api/students', studentRoutes);
+app.use('/api/getStudents', userRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
