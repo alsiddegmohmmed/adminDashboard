@@ -1,4 +1,6 @@
 import express from "express"; 
+import { getStudents } from "../controllers/studentController.js";
+import { getTeachers } from "../controllers/teacherController.js";
 
 import { 
   authUser,
@@ -15,6 +17,7 @@ import {
 import { protect, teacher } from "../middleware/authMiddleware.js";
 import User from "../models/userModel.js";
 import asyncHandler from 'express-async-handler';
+
 
 const router = express.Router();
 router.post('/', registerUser);
@@ -33,6 +36,14 @@ router.route('/')
 
 // router.route('/:id').put(protect, teacher, updateUser) ;
 router.route('/:id').delete(protect, deleteUser).put(protect, updateUser);
+
+router.route('/students')
+    .get(protect, teacher, getStudents);
+
+// Fetch teachers
+router.route('/teachers')
+    .get(protect, teacher, getTeachers);
+
 
 
 export default router; 

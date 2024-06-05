@@ -9,6 +9,11 @@ const navigation = [
     icon: "bi bi-speedometer2",
   },
   {
+    title: "Students",
+    href: "/students",
+    icon: "bi bi-bell",
+  },
+  {
     title: "Alert",
     href: "/alerts",
     icon: "bi bi-bell",

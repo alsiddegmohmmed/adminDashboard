@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import morgan from 'morgan';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
@@ -8,6 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import User from './models/userModel.js';
 import cors from 'cors';
+import logger from './logger.js';
 
 // Load environment variables
 dotenv.config();
@@ -25,6 +27,16 @@ app.use(cors({
   origin: '*', // or '*' to allow all origins
   credentials: true,
 }));
+app.use(morgan('dev'));
+
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
+});
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 app.get('/api/getUsers', (req, res) => {
   User.find()
@@ -33,12 +45,12 @@ app.get('/api/getUsers', (req, res) => {
 });
 
 app.use('/api/users', userRoutes);
-app.use('/api/students', studentRoutes);
+// app.use('/api/students', studentRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, '/dist')));
-
+  
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
   );
@@ -74,5 +86,6 @@ app.post('/api/addUsers', async (req, res) => {
 
 app.use(notFound);
 app.use(errorHandler);
+
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

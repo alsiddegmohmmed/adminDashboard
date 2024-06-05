@@ -1,11 +1,12 @@
 import asyncHandler from 'express-async-handler';
 import Student from '../models/studentModel.js';
+import User from '../models/userModel.js';
 
 // @desc    Get all students
 // @route   GET /api/students
 // @access  Private/Teacher
 const getStudents = asyncHandler(async (req, res) => {
-    const students = await Student.find({});
+    const students = await User.find({ role: 'student' });
     res.json(students);
 });
 

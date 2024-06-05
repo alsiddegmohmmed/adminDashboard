@@ -1,11 +1,13 @@
-import { lazy } from "react";
-import { Navigate } from "react-router-dom";
+import React, { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
+import PrivateRoute from '../components/PrivateRoute.jsx';
+import WelcomePage from '../components/WelcomePage.jsx';
+import Students from '../views/ui/Students.js';
 
-/****Layouts*****/
+/*****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 /***** Pages ****/
-
 const Starter = lazy(() => import("../views/Starter.js"));
 const About = lazy(() => import("../views/About.js"));
 const Alerts = lazy(() => import("../views/ui/Alerts.js"));
@@ -18,23 +20,36 @@ const Forms = lazy(() => import("../views/ui/Forms.js"));
 const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs.js"));
 
 /*****Routes******/
-
 const ThemeRoutes = [
   {
     path: "/",
-    element: <FullLayout />,
+    element: <Navigate to="/welcome" replace />,
+  },
+  {
+    path: "/welcome",
+    element: <WelcomePage />,
+  },
+  {
+    path: "/",
+    element: <PrivateRoute />, // Protect all routes under FullLayout
     children: [
-      { path: "/", element: <Navigate to="/starter" /> },
-      { path: "/starter", exact: true, element: <Starter /> },
-      { path: "/about", exact: true, element: <About /> },
-      { path: "/alerts", exact: true, element: <Alerts /> },
-      { path: "/badges", exact: true, element: <Badges /> },
-      { path: "/buttons", exact: true, element: <Buttons /> },
-      { path: "/cards", exact: true, element: <Cards /> },
-      { path: "/grid", exact: true, element: <Grid /> },
-      { path: "/table", exact: true, element: <Tables /> },
-      { path: "/forms", exact: true, element: <Forms /> },
-      { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
+      {
+        path: "/",
+        element: <FullLayout />,
+        children: [
+          { path: "starter", element: <Starter /> },
+          { path: "about", element: <About /> },
+          { path: "students", element: <Students /> },
+          { path: "alerts", element: <Alerts /> },
+          { path: "badges", element: <Badges /> },
+          { path: "buttons", element: <Buttons /> },
+          { path: "cards", element: <Cards /> },
+          { path: "grid", element: <Grid /> },
+          { path: "table", element: <Tables /> },
+          { path: "forms", element: <Forms /> },
+          { path: "breadcrumbs", element: <Breadcrumbs /> },
+        ],
+      }
     ],
   },
 ];

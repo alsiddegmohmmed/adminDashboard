@@ -1,18 +1,21 @@
-import React, { Suspense } from "react";
-import { Provider } from "react-redux"; // Import Provider from react-redux
-import { createRoot } from 'react-dom/client';
+// src/index.js
+
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
 import "./assets/scss/style.scss";
-import App from "./App.js";
-import reportWebVitals from "./reportWebVitals.js";
-import { HashRouter } from "react-router-dom";
-import Loader from "./layouts/loader/Loader.js";
-import store from './store.js'; // Import your Redux store
+import { Provider } from 'react-redux';
+import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
+import App from './App.js';
+import store from "./store.js"
+import reportWebVitals from './reportWebVitals.js';
+import Loader from "./layouts/loader/Loader.js"
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
-  <Provider store={store}> {/* Wrap your App with Provider and pass store as prop */}
+  <Provider store={store}>
     <Suspense fallback={<Loader />}>
       <HashRouter>
         <App />

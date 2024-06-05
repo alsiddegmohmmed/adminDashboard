@@ -24,23 +24,20 @@ const ProjectTables = () => {
   };
 
   const deleteUser = (id, name) => {
-    const token = localStorage.getItem('token'); // Adjust this based on how you store the token
-
     if (window.confirm(`Are you sure you want to delete ${name}`)) {
-        axios.delete(`http://localhost:5000/api/users/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            alert(response.data.message);
-            getAllUsers()
-        })
-        .catch(error => {
-            console.error('There was an error deleting the user!', error);
-        });
+      axios.delete(`http://localhost:5000/api/users/${id}`, {
+        withCredentials: true // This ensures cookies are sent with the request
+      })
+      .then(response => {
+        alert(response.data.message);
+        getAllUsers();
+      })
+      .catch(error => {
+        console.error('There was an error deleting the user!', error);
+        alert('There was an error deleting the user!');
+      });
     }
-};
+  };
 
   return (
     <div>
@@ -65,7 +62,7 @@ const ProjectTables = () => {
                 <tr key={user._id} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
-                    <img
+                      <img
                         src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=3431&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         className="rounded-circle"
                         alt="avatar"
@@ -81,13 +78,14 @@ const ProjectTables = () => {
                   <td><p>placeholder</p></td>
                   <td><p>placeholder</p></td>
                   <td><p>placeholder</p></td>
-                  <td><Button
-                                            variant="danger"
-                                            onClick={() => deleteUser(user._id, user.name)}
-                                        >
-                                            Delete
-                                        </Button></td>
-                  
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => deleteUser(user._id, user.name)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
