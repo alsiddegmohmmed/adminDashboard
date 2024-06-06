@@ -11,7 +11,10 @@ import {
   deleteUser,
   createUser,
   getStudents,
-  getTeachers, 
+  getTeachers,
+  countUsers,
+  countStudents,
+  countTeachers  
 } from "../controllers/userController.js";
 
 import { protect, teacher } from "../middleware/authMiddleware.js";
@@ -39,6 +42,15 @@ router.route('/')
     
     router.route('/teachers')
     .get(getTeachers); 
+    
+    router.route('/count')
+  .get(countUsers); 
+
+  router.route('/count/students')
+  .get(countStudents);
+
+router.route('/count/teachers')
+  .get(countTeachers);
 
 // router.route('/:id').put(protect, teacher, updateUser) ;
 router.route('/:id').delete( deleteUser).put( updateUser);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, Table, Button } from 'reactstrap';
 import axios from 'axios';
+import ModalForm from "../modelform/ModalForm.js"
 
 const ProjectTables = () => {
   const [users, setUsers] = useState([]);
@@ -12,6 +13,7 @@ const ProjectTables = () => {
     getAllTeachers();
   }, []);
 
+  
   const getAllTeachers = () => {
     axios.get('http://localhost:5000/api/users/teachers') // Adjusted according to proxy setup
       .then(response => {
@@ -113,6 +115,7 @@ const ProjectTables = () => {
           </Table>
         </CardBody>
       </Card>
+      <ModalForm show={showModal} handleClose={handleCloseModal} handleSubmit={handleAddUser}  />
     </div>
   );
 };

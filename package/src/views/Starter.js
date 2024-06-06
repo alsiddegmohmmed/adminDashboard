@@ -1,4 +1,5 @@
 import { Col, Row } from "reactstrap";
+import { useState, useEffect } from "react";
 import SalesChart from "../components/dashboard/SalesChart.js";
 import Feeds from "../components/dashboard/Feeds.js";
 import ProjectTables from "../components/dashboard/ProjectTable.js";
@@ -8,6 +9,11 @@ import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
+import { fetchUserCount, fetchStudentCount, fetchTeacherCount } from '../utils/api.js'; // Import the functions
+
+
+
+
 
 const BlogData = [
   {
@@ -45,6 +51,26 @@ const BlogData = [
 ];
 
 const Starter = () => {
+
+  const [userCount, setUserCount] = useState(0); // State to store the user count
+  const [studentCount, setStudentCount] = useState(0); // State to store the student count
+    const [teacherCount, setTeacherCount] = useState(0); 
+
+    useEffect(() => {
+        const getUserCount = async () => {
+          const userCount = await fetchUserCount();
+          const studentCount = await fetchStudentCount();
+          const teacherCount = await fetchTeacherCount();
+
+          setUserCount(userCount);
+          setStudentCount(studentCount);
+          setTeacherCount(teacherCount);
+        };
+
+        getUserCount();
+    }, []);
+
+
   return (
     <div>
       {/***Top Cards***/}
@@ -53,8 +79,8 @@ const Starter = () => {
           <TopCards
             bg="bg-light-success text-success"
             title="Profit"
-            subtitle="Yearly Earning"
-            earning="$21k"
+            subtitle="Number Of Users"
+            earning={userCount}
             icon="bi bi-wallet"
           />
         </Col>
@@ -62,8 +88,8 @@ const Starter = () => {
           <TopCards
             bg="bg-light-danger text-danger"
             title="Refunds"
-            subtitle="Refund given"
-            earning="$1k"
+            subtitle="Number Of Teachers"
+            earning={teacherCount}
             icon="bi bi-coin"
           />
         </Col>
@@ -71,8 +97,8 @@ const Starter = () => {
           <TopCards
             bg="bg-light-warning text-warning"
             title="New Project"
-            subtitle="Yearly Project"
-            earning="456"
+            subtitle="Number Of Students"
+            earning={studentCount}
             icon="bi bi-basket3"
           />
         </Col>

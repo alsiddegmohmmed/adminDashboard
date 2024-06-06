@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 
+
 // @desc Auth user/set token
 // @route POST /api/users/auth
 // @access Public
@@ -113,6 +114,22 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
+const countUsers = asyncHandler(async (req, res) => {
+    const userCount = await User.countDocuments({});
+    res.status(200).json({ count: userCount });
+});
+
+const countStudents = asyncHandler(async (req, res) => {
+    const studentCount = await User.countDocuments({ role: 'student' });
+    res.status(200).json({ count: studentCount });
+});
+
+const countTeachers = asyncHandler(async (req, res) => {
+    const teacherCount = await User.countDocuments({ role: 'teacher' });
+    res.status(200).json({ count: teacherCount });
+});
+
+ 
 // @desc Get all users
 // @route GET /api/users
 // @access Private/Teacher
@@ -122,12 +139,13 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 const getStudents = asyncHandler(async (req, res) => {
-    const students = await User.find({ role: 'student' });
+    const students = await User.find({ role: 'student' }).sort({createdAt: -1});
     res.status(200).json(students); // Make sure to send a proper status code
 });
 
 const getTeachers = asyncHandler(async (req, res) => {
-    const teachers = await User.find({ role: 'teacher' }); 
+    const teachers = await User.find({ role: 'teacher' }).sort({createdAt: -1});;
+    // .sort({ last_review: -1 });
     res.status(200).json(teachers); 
 })
 // @desc Create a new user
@@ -191,6 +209,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 });
 
+
 export {
     authUser,
     registerUser,
@@ -203,4 +222,7 @@ export {
     deleteUser,
     getStudents,
     getTeachers, 
+    countUsers,
+    countStudents, 
+    countTeachers,
 };
