@@ -1,9 +1,8 @@
-// src/routes/ThemeRoutes.js
-
 import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import WelcomePage from '../components/WelcomePage.jsx';
 import Students from '../views/ui/Students.js';
+import LoginScreen from '../components/formsign/LoginScreen.jsx';
 
 /*****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -31,6 +30,10 @@ const ThemeRoutes = [
     element: <WelcomePage />,
   },
   {
+    path: "/login",
+    element: <LoginScreen />,
+  },
+  {
     path: "/",
     element: <FullLayout />,
     children: [
@@ -46,6 +49,10 @@ const ThemeRoutes = [
       { path: "forms", element: <Forms /> },
       { path: "breadcrumbs", element: <Breadcrumbs /> },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/welcome" replace />,
   },
 ];
 

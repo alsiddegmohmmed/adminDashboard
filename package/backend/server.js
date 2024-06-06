@@ -8,8 +8,13 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import User from './models/userModel.js';
-import cors from 'cors';
 import logger from './logger.js';
+import cors from 'cors';
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
 
 // Load environment variables
 dotenv.config();
@@ -23,10 +28,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-  origin: '*', // or '*' to allow all origins
-  credentials: true,
-}));
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 
 app.use((req, res, next) => {

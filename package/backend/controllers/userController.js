@@ -178,6 +178,23 @@ const createUser = asyncHandler(async (req, res) => {
 // @desc Update user
 // @route PUT /api/users/:id
 // @access Private/Teacher
+const deleteUser = asyncHandler(async (req, res) => {
+    console.log('Delete user endpoint hit');
+    console.log('User ID:', req.params.id);
+
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        await user.deleteOne();
+        console.log('User deleted');
+        res.status(200).json({ message: 'User removed' });
+    } else {
+        console.error('User not found');
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
 const updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
@@ -188,21 +205,6 @@ const updateUser = asyncHandler(async (req, res) => {
 
         const updatedUser = await user.save();
         res.status(200).json(updatedUser);
-    } else {
-        res.status(404);
-        throw new Error('User not found');
-    }
-});
-
-// @desc Delete user
-// @route DELETE /api/users/:id
-// @access Private/Teacher
-const deleteUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-
-    if (user) {
-        await user.deleteOne();
-        res.status(200).json({ message: 'User removed' });
     } else {
         res.status(404);
         throw new Error('User not found');

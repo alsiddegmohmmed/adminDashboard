@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice.js";
 import { useDispatch, useSelector } from 'react-redux';
-import logout from "../slices/authSlice.js";
+import {logout} from "../slices/authSlice.js";
 
 import {
   Navbar,
@@ -38,14 +38,10 @@ const Header = () => {
   };
 
 
-  const logoutHandler = async () => {
-    try {
-      await logoutApiCall().unwrap();
-      dispatch(logout());
-      navigate('/welcome');
-    } catch (err) {
-      console.log(err);
-    }
+  const logoutHandler = () => {
+    localStorage.removeItem('authToken');
+    dispatch(logout());
+    navigate('/welcome');
   };
 
   return (

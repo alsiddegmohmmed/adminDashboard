@@ -43,6 +43,10 @@ const LoginScreen = () => {
         }
     };
 
+    const setToken = (token) => {
+        localStorage.setItem('authToken', token);
+      };
+
     const submitHandler = async (e) => {
         e.preventDefault();
         let isValid = true;
@@ -68,6 +72,8 @@ const LoginScreen = () => {
             try {
                 const res = await login({ email, password }).unwrap();
                 dispatch(setCredentials({ ...res }));
+                setToken(res.token); // Save token in local storage
+
                 navigate('/starter', { replace: true });
             } catch (err) {
                 const errorMessage = err?.data?.message || err.error;
