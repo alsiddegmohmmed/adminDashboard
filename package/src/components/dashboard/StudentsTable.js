@@ -64,7 +64,7 @@ const StudentsTables = () => {
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                        src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=3431&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="https://img.freepik.com/free-photo/serious-pensive-young-student-looking-directly-camera_176532-8154.jpg?t=st=1717641769~exp=1717645369~hmac=a2ddf4c219ac1febb24fdf5beafe0354d0af6f9d6b212de3fae0e1e0af990edf&w=2000"
                         className="rounded-circle"
                         alt="avatar"
                         width="45"

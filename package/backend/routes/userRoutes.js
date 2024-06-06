@@ -1,5 +1,4 @@
 import express from "express"; 
-import { getTeachers } from "../controllers/teacherController.js";
 
 import { 
   authUser,
@@ -12,6 +11,7 @@ import {
   deleteUser,
   createUser,
   getStudents,
+  getTeachers, 
 } from "../controllers/userController.js";
 
 import { protect, teacher } from "../middleware/authMiddleware.js";
@@ -35,7 +35,10 @@ router.route('/')
     .post( createUser); // Changed from admin to teacher
 
     router.route('/students')
-    .get( getStudents);     
+    .get( getStudents); 
+    
+    router.route('/teachers')
+    .get(getTeachers); 
 
 // router.route('/:id').put(protect, teacher, updateUser) ;
 router.route('/:id').delete( deleteUser).put( updateUser);
@@ -44,8 +47,7 @@ router.route('/:id').delete( deleteUser).put( updateUser);
 //     .get(protect, teacher, getStudents);
 
 // Fetch teachers
-router.route('/teachers')
-    .get( getTeachers);
+
 
 
 

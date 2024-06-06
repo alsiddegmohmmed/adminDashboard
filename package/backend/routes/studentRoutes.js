@@ -1,5 +1,4 @@
 import express from 'express';
-const router = express.Router();
 import {
     getStudents,
     addStudent,
@@ -7,6 +6,7 @@ import {
     deleteStudent
 } from '../controllers/studentController.js';
 import { protect, teacher } from '../middleware/authMiddleware.js';
+const router = express.Router();
 
 router.route('/')
     .get(protect, teacher, getStudents)

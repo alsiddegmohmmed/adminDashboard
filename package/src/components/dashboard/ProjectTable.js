@@ -4,15 +4,27 @@ import axios from 'axios';
 
 const ProjectTables = () => {
   const [users, setUsers] = useState([]);
+  const [teachers, setTeachers] = useState([])
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    getAllUsers();
+    getAllTeachers();
   }, []);
 
+  const getAllTeachers = () => {
+    axios.get('http://localhost:5000/api/users/teachers') // Adjusted according to proxy setup
+      .then(response => {
+        setTeachers(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  };
   const getAllUsers = () => {
-    axios.get('http://localhost:5000/api/getusers') // Adjusted according to proxy setup
+    axios.get('http://localhost:5000/api/users/teachers') // Adjusted according to proxy setup
       .then(response => {
         setUsers(response.data);
         setLoading(false);
@@ -38,6 +50,13 @@ const ProjectTables = () => {
       });
     }
   };
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleAddUser = (newUser) => {
+    setUsers([...users, newUser]);
+    handleCloseModal();
+  };
 
   return (
     <div>
@@ -47,6 +66,8 @@ const ProjectTables = () => {
           <CardSubtitle className="mb-2 text-muted" tag="h6">
             Overview of the Teachers
           </CardSubtitle>
+          <Button variant="primary" onClick={handleShowModal}> Add new user </Button>
+
           <Table className="no-wrap mt-3 align-middle" responsive borderless>
             <thead>
               <tr>
@@ -58,30 +79,30 @@ const ProjectTables = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
-                <tr key={user._id} className="border-top">
+              {teachers.map(teacher => (
+                <tr key={teacher._id} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                        src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=3431&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="https://www.maldenblueandgold.com/wp-content/uploads/2017/09/DSCN0322-1-e1506611764886.jpg"
                         className="rounded-circle"
                         alt="avatar"
                         width="45"
                         height="45"
                       />
                       <div className="ms-3">
-                        <h6 className="mb-0">{user.name}</h6>
+                        <h6 className="mb-0">{teacher.name}</h6>
                         <span className="text-muted"></span>
                       </div>
                     </div>
                   </td>
-                  <td><p>{user.email}</p></td>
-                  <td><p>{user.role}</p></td>
-                  <td><p>{user.createdAt}</p></td>
+                  <td><p>{teacher.email}</p></td>
+                  <td><p>{teacher.role}</p></td>
+                  <td><p>{teacher.createdAt}</p></td>
                   <td>
                     <Button
                       variant="danger"
-                      onClick={() => deleteUser(user._id, user.name)}
+                      onClick={() => deleteUser(teacher._id, teacher.name)}
                     >
                       Delete
                     </Button>

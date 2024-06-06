@@ -93,7 +93,7 @@ const Starter = () => {
           <ProjectTables />
         </Col>
       </Row>
-      {/***Sales & Feed***/}
+      {/* **Sales & Feed**
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="8">
           <SalesChart />
@@ -101,9 +101,10 @@ const Starter = () => {
         <Col sm="6" lg="6" xl="5" xxl="4">
           <Feeds />
         </Col>
-      </Row>
+      </Row> */}
       {/***Blog Cards***/}
       <Row>
+        <h1>Teachears Courses </h1>
         {BlogData.map((blg, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>
             <Blog
