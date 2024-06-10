@@ -1,10 +1,12 @@
-import { Col, Row } from "reactstrap";
+import { Card, Col, Row } from "reactstrap";
 import { useState, useEffect } from "react";
 import SalesChart from "../components/dashboard/SalesChart.js";
 import Feeds from "../components/dashboard/Feeds.js";
 import ProjectTables from "../components/dashboard/ProjectTable.js";
 import TopCards from "../components/dashboard/TopCards.js";
 import Blog from "../components/dashboard/Blog.js";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
@@ -55,6 +57,28 @@ const Starter = () => {
   const [userCount, setUserCount] = useState(0); // State to store the user count
   const [studentCount, setStudentCount] = useState(0); // State to store the student count
     const [teacherCount, setTeacherCount] = useState(0); 
+    const [titles, setTitles] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+  
+  
+    const navigate = useNavigate(); 
+    useEffect(() => {
+      fetchCourseTitles();
+    }, []);
+  
+    const fetchCourseTitles = () => {
+      axios.get('http://localhost:5001/api/users/getcoursetitles')
+        .then(response => {
+          setTitles(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError(error.message);
+          setLoading(false);
+        });
+    };
+  
 
     useEffect(() => {
         const getUserCount = async () => {
@@ -131,14 +155,14 @@ const Starter = () => {
       {/***Blog Cards***/}
       <Row>
         <h1>Teachears Courses </h1>
-        {BlogData.map((blg, index) => (
-          <Col sm="6" lg="6" xl="3" key={index}>
+        {titles.map((title) => (
+          <Col sm="6" lg="6" xl="3" key={title._id}>
             <Blog
-              image={blg.image}
-              title={blg.title}
-              subtitle={blg.subtitle}
-              text={blg.description}
-              color={blg.btnbg}
+              image= {bg1}
+              title={title.title}
+              subtitle={title.subtitle}
+              text={title.description}
+              
             />
           </Col>
         ))}

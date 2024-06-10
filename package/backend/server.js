@@ -11,7 +11,7 @@ import User from './models/userModel.js';
 import logger from './logger.js';
 import cors from 'cors';
 const corsOptions ={
-  origin:'http://localhost:3000', 
+  origin:'http://localhost:3001', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
@@ -22,7 +22,7 @@ dotenv.config();
 // Connect to MongoDB
 connectDB();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 const app = express();
 app.use(express.json());

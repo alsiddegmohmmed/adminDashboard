@@ -14,7 +14,8 @@ import {
   getTeachers,
   countUsers,
   countStudents,
-  countTeachers  
+  countTeachers,
+  getCourseTitles, 
 } from "../controllers/userController.js";
 
 import { protect, teacher } from "../middleware/authMiddleware.js";
@@ -55,10 +56,8 @@ router.route('/count/teachers')
 // router.route('/:id').put(protect, teacher, updateUser) ;
 router.route('/:id').delete( deleteUser).put( updateUser);
 
-// router.route('/students')
-//     .get(protect, teacher, getStudents);
+router.get('/getcoursetitles', getCourseTitles);
 
-// Fetch teachers
 
 
 

@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
+import Course from '../models/coursesModel.js'
 import generateToken from '../utils/generateToken.js';
 
 
@@ -211,6 +212,13 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 });
 
+const getCourseTitles = asyncHandler(async (req, res) => {
+    const courses = await Course.find({}).populate('createdBy', 'name');
+    ; // Only fetch the title field
+    res.status(200).json(courses);
+  });
+  
+
 
 export {
     authUser,
@@ -227,4 +235,5 @@ export {
     countUsers,
     countStudents, 
     countTeachers,
+    getCourseTitles,
 };

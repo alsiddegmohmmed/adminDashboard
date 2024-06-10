@@ -12,7 +12,7 @@ const StudentsTables = () => {
   }, []);
 
   const getAllStudents = () => {
-    axios.get('http://localhost:5000/api/users/students')
+    axios.get('http://localhost:5001/api/users/students')
       .then(response => {
         setStudents(response.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const StudentsTables = () => {
 
   const deleteUser = (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}`)) {
-      axios.delete(`http://localhost:5000/api/users/${id}`, {
+      axios.delete(`http://localhost:5001/api/users/${id}`, {
         withCredentials: true // This ensures cookies are sent with the request
       })
       .then(response => {

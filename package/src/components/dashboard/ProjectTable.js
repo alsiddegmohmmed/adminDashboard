@@ -15,7 +15,7 @@ const ProjectTables = () => {
 
   
   const getAllTeachers = () => {
-    axios.get('http://localhost:5000/api/users/teachers') // Adjusted according to proxy setup
+    axios.get('http://localhost:5001/api/users/teachers') // Adjusted according to proxy setup
       .then(response => {
         setTeachers(response.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const ProjectTables = () => {
       });
   };
   const getAllUsers = () => {
-    axios.get('http://localhost:5000/api/users/teachers') // Adjusted according to proxy setup
+    axios.get('http://localhost:5001/api/users/teachers') // Adjusted according to proxy setup
       .then(response => {
         setUsers(response.data);
         setLoading(false);
@@ -39,7 +39,7 @@ const ProjectTables = () => {
 
   const deleteUser = (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}`)) {
-      axios.delete(`http://localhost:5000/api/users/${id}`, {
+      axios.delete(`http://localhost:5001/api/users/${id}`, {
         withCredentials: true // This ensures cookies are sent with the request
       })
       .then(response => {
